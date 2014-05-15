@@ -3,5 +3,5 @@
 require './app'
 require './proxy'
 
-use Proxy
+# use Proxy
 run App.new

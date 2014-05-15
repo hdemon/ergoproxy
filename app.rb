@@ -13,7 +13,17 @@ class App
                  (uri.port ? ":#{uri.port.to_s}" : '')
 
     conn = Faraday.new url: target_uri
-    conn.get(uri.path).env
+    res = conn.get(uri.path).env
+
+    response_array res
+  end
+
+  def response_array(res)
+    [
+      res.response_headers.delete("status"),
+      res.response_headers,
+      [res.body],
+    ]
   end
 
   def target_uri_string
