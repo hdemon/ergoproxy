@@ -8,9 +8,9 @@ class Proxy
   def call(env)
     res = @app.call(env)
     [
-      res.response_headers["status"],
+      res.response_headers.delete("status"),
       res.response_headers,
-      [body],
+      [res.body],
     ]
   end
 end
