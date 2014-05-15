@@ -2,7 +2,6 @@
 
 require "faraday"
 require 'uri'
-require "pry"
 
 class App
   def call(env)

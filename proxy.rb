@@ -7,10 +7,10 @@ class Proxy
 
   def call(env)
     res = @app.call(env)
-    p res
-    res[2].each do |body|
-      body.gsub!(/！|？|。|，/) { "にゃ#{$&}" }
-    end
-    res
+    [
+      res.response_headers["status"],
+      res.response_headers,
+      [body],
+    ]
   end
 end
