@@ -1,19 +1,24 @@
 # coding: utf-8
 
 require "faraday"
+require 'excon'
 require 'uri'
+# require 'pry'
 
 class App
   def call(env)
-    @params = parse_params env["QUERY_STRING"]
+    @env = env
 
-    uri = URI.parse target_uri_string
-    target_uri = uri.scheme +
-                 "://" + uri.host +
-                 (uri.port ? ":#{uri.port.to_s}" : '')
+    uri = URI.parse URI.decode params["target_uri"]
+    conn = Faraday.new(url: origin(uri)) do |faraday|
+      faraday.adapter :excon
+    end
 
-    conn = Faraday.new url: target_uri
-    response_array conn.get(uri.path).env
+    env = conn.get(uri.path) do |req|
+      req.headers = request_headers
+    end.env
+
+    response_array env
   end
 
   def response_array(env)
@@ -24,12 +29,20 @@ class App
     ]
   end
 
-  def target_uri_string
-    URI.decode @params["target_uri"]
+  def origin(uri)
+    uri.scheme +
+      "://" + uri.host +
+      (uri.port ? ":#{uri.port.to_s}" : '')
   end
 
-  def parse_params(query_string)
-    query_string.split('&').each_with_object({}) do |string, object|
+  def request_headers
+    @env.select {|k,v| k.start_with? 'HTTP_'}.each_with_object({}) do |array, hash|
+      hash[array[0].sub(/^HTTP_/, '')] = array[1]
+    end.tap { |hash| hash.delete('HOST') }
+  end
+
+  def params
+    @env["QUERY_STRING"].split('&').each_with_object({}) do |string, object|
       parts = string.split '='
       object[parts[0]] = parts[1]
     end
