@@ -2,4 +2,4 @@
 
 require './app'
 
-run App.new
+run Ergo::App.new

@@ -1,13 +1,15 @@
 # coding: utf-8
+module Ergo end
 
 require "faraday"
 require 'excon'
 require './request'
 # require 'pry'
 
-class App
+
+class Ergo::App
   def call(env)
-    request = Request.new env
+    request = Ergo::Request.new env
 
     conn = Faraday.new(url: request.target_origin) do |faraday|
       faraday.adapter :excon

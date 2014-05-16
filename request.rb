@@ -1,6 +1,6 @@
 require 'uri'
 
-class Request
+class Ergo::Request
   def initialize(env)
     @env = env
   end
