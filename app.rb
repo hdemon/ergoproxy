@@ -5,7 +5,6 @@ require "faraday"
 require 'excon'
 require './request'
 require './cache_controller'
-require 'pry'
 
 
 class Ergo::App
