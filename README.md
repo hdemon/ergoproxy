@@ -4,6 +4,14 @@ ergoproxy
 Minimal Rack Application that proxies client's request and caches server's response
 
 
+Why I create
+------
+
+We usually access web API to get resource. But some API limited access rate because of server resource's limitation.
+
+So I create this Rack application to proxy your request and cache server's response.
+
+
 Setup
 -------
 
@@ -11,26 +19,30 @@ Setup
 bundle
 ```
 
-and create cache.yaml with the following content
+and you need to describe cache configuration to `cache.yaml`. See the following.
 
-```yaml
-"https://api.github.com:443":
-  duration: 60
-```
 
 Usage
 ------
 
-When you want to get json of this README from github api,
+When you want to get json of this README from Github api ( = `https://api.github.com/repos/hdemon/my-site/contents/README.md`),
+
+First, create `cache.yaml` with the following content
+
+```yaml
+"https://api.github.com:443":
+  duration: 60 # second
+```
+
+and run this
+
 
 ```
 $ rackup
 $ curl -i "localhost:9292/?target_uri=https%3A%2F%2Fapi.github.com%2Frepos%2Fhdemon%2Fmy-site%2Fcontents%2FREADME.md"
 ```
 
-Usually, github API limits access rate. But by accessing API through this Rack app, this app proxies your request and cache API's response.
-
-Cache duration is configured by cache.yaml.
+Github API's response will be cached 60 seconds.
 
 
 TODO
