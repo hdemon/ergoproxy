@@ -40,6 +40,6 @@ class Ergo::App
   end
 
   def should_use_cache?(target_uri)
-    @@response_cache.exist? target_uri.to_s
+    @@response_cache.exist?(target_uri.to_s) && !@@response_cache.expired?(target_uri.to_s)
   end
 end
