@@ -2,7 +2,7 @@
 
 require 'yaml'
 
-class Ergo::Cache
+class Ergo::CacheController
   def initialize
     @cache = {}
     @previous_access_time = {}

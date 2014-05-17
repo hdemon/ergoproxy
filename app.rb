@@ -4,12 +4,12 @@ module Ergo end
 require "faraday"
 require 'excon'
 require './request'
-require './cache'
+require './cache_controller'
 require 'pry'
 
 
 class Ergo::App
-  @@response_cache = Ergo::Cache.new
+  @@response_cache = Ergo::CacheController.new
 
   def call(env)
     @request = Ergo::Request.new env
