@@ -1,6 +1,7 @@
 # coding: utf-8
 
 require 'yaml'
+require 'active_support'
 
 class Ergo::CacheController
   def initialize
@@ -23,7 +24,11 @@ class Ergo::CacheController
   end
 
   def duration(key)
-    @config[key]['duration']
+    if defined? @config[key]['duration']
+      @config[key]['duration']
+    else
+      0
+    end
   end
 
   # TODO: DRY up. It is overlapped with Ergo:Request
