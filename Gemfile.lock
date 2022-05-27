@@ -20,7 +20,7 @@ GEM
       coderay (~> 1.0)
       method_source (~> 0.8)
       slop (~> 3.4)
-    rack (1.5.2)
+    rack (2.1.4.1)
     rack-cors (0.2.9)
     slop (3.5.0)
     thread_safe (0.3.3)
