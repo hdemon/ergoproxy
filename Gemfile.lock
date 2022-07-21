@@ -23,8 +23,8 @@ GEM
     rack (1.5.2)
     rack-cors (0.2.9)
     slop (3.5.0)
-    thread_safe (0.3.3)
-    tzinfo (1.1.0)
+    thread_safe (0.3.6)
+    tzinfo (1.2.10)
       thread_safe (~> 0.1)
 
 PLATFORMS
